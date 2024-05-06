@@ -10,16 +10,16 @@ namespace ProcessMonitor
     public class ProcessMonitorTimer:Timer
     {
         public string ProcessName { get; set; }
-        public int MaximumTTL { get; set; }
+        public TimeSpan MaximumTTLSeconds { get; set; }
 
-        public ProcessMonitorTimer(int secondsInterval) : base(secondsInterval)
+        public ProcessMonitorTimer(int milliSecondsInterval) : base(milliSecondsInterval)
         {
 
         }
-        public ProcessMonitorTimer(int secondsInterval,string processName,int maximumTTL):this(secondsInterval)
+        public ProcessMonitorTimer(int milliSecondsInterval,string processName,int maximumTTLSeconds):this(milliSecondsInterval)
         {
             ProcessName = processName;
-            MaximumTTL = maximumTTL;
+            MaximumTTLSeconds = new TimeSpan(0,0,maximumTTLSeconds);
         }
 
     }
