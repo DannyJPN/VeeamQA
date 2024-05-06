@@ -23,9 +23,12 @@ namespace ProcessMonitor
 
             Console.WriteLine("\nPress the Enter key to exit the application...\n");
             Console.WriteLine("The application started at {0:HH:mm:ss.fff}", DateTime.Now);
-           
-          //  Console.ReadLine();
-            Console.WriteLine("Terminating the application...");
+
+            while (true)
+            {
+                System.Threading.Thread.Sleep(10000);
+            }
+            
         }
 
         private static void SetProcessMonitorTimer(int milliSecondsInterval, string processName, int maximumTTLSeconds)
