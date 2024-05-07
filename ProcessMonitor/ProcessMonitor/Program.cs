@@ -13,22 +13,35 @@ namespace ProcessMonitor
     internal class Program
     {
         private static ProcessMonitorTimer processMonitorTimer;
+
         static void Main(string[] args)
         {
             string processName = "notepad";// args[1];
             int maximumTTLSeconds = 200;// int.Parse(args[2]);
             int milliSecondsInterval = 60000;// Convert.ToInt32(args[3]);
+            char keyPressed;
 
             SetProcessMonitorTimer( milliSecondsInterval, processName, maximumTTLSeconds);
 
-            Console.WriteLine("\nPress the Enter key to exit the application...\n");
+            Console.WriteLine("\nPress the Q key to exit the application...\n");
             Console.WriteLine("The application started at {0:HH:mm:ss.fff}", DateTime.Now);
 
             while (true)
             {
-                System.Threading.Thread.Sleep(10000);
+                
+              
+                keyPressed = Console.ReadKey(true).KeyChar;
+                //Console.WriteLine("Key pressed: {0}", keyPressed);
+                if (keyPressed == 'Q' || keyPressed == 'q')
+                {
+                   
+                    processMonitorTimer.Enabled = false;
+                    processMonitorTimer.Stop();
+                    processMonitorTimer.Dispose();
+                    Console.WriteLine("The application quitting at {0:HH:mm:ss.fff}", DateTime.Now);
+                    break;
+                }
             }
-            
         }
 
         private static void SetProcessMonitorTimer(int milliSecondsInterval, string processName, int maximumTTLSeconds)
@@ -61,7 +74,7 @@ namespace ProcessMonitor
 
             Console.WriteLine("The process check occured at {0},{1} processes found with name {2}", e.SignalTime,processesByName.Length, processMonitorTimer.ProcessName);
 
-            CheckKeyboardForQuitKey(Key.Q);
+            //CheckKeyboardForQuitKey(Key.Q);
         }
         private static void CheckKeyboardForQuitKey(Key quitKey)
         {
